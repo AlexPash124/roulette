@@ -1,12 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // Імпортуємо плагін
 
 module.exports = {
-    entry: './src/index.js', // Вхідний файл
+    entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        assetModuleFilename: 'assets/[name][ext][query]' // Налаштування шляху для ресурсів
+        assetModuleFilename: 'assets/[name][ext][query]'
     },
     module: {
         rules: [
@@ -21,20 +22,25 @@ module.exports = {
                 },
             },
             {
-                test: /\.(png|jpe?g|gif|svg|webp)$/, // Лоадер для зображень
-                type: 'asset/resource', // Використовуємо новий синтаксис для Webpack 5
+                test: /\.(png|jpe?g|gif|svg|webp)$/,
+                type: 'asset/resource',
             },
         ],
     },
     devServer: {
-        static: path.join(__dirname, 'dist'), // Вказуємо директорію для сервера
+        static: path.join(__dirname, 'dist'),
         port: 4000,
-        open: true, // Автоматично відкривати браузер
-        hot: true,  // Гаряча заміна
+        open: true,
+        hot: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: path.resolve(__dirname, 'src/assets'), to: 'assets' } // Копіюємо папку assets у dist
+            ],
         }),
     ],
 };
