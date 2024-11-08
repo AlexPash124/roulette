@@ -6,7 +6,8 @@ await app.init({
     width: window.innerWidth,
     height: window.innerHeight,
     resolution: window.devicePixelRatio || 1,
-    autoResize: true
+    autoResize: true,
+    resizeTo: window,
 });
 document.body.appendChild(app.canvas);
 

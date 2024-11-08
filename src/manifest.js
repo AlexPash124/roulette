@@ -6,6 +6,12 @@ export const manifest = {
             assets: {
                 bg: "./assets/bg.png"
             }
+        },
+        {
+            name: "spinButton",
+            assets: {
+                spinButton: "./assets/spinButton.png"
+            }
         }
     ]
 };
