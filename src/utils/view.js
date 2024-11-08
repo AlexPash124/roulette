@@ -5,6 +5,8 @@ import {GLOBAL_SCALE} from "../app/app";
 export class View extends Container {
     constructor(parent) {
         super();
+        parent.addChild(this)
+
         this.initEmitter()
         this.addEventListenerResize()
     }

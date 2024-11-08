@@ -3,8 +3,7 @@ import {Assets, Sprite} from "pixi.js";
 
 export class GameBgView extends View {
     constructor(parent) {
-        super();
-        parent.addChild(this)
+        super(parent);
 
         this.addChild(new Sprite({
             texture: Assets.get("bg")

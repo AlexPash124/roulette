@@ -26,24 +26,24 @@ export class App extends PIXI.Application {
         this.registerModule(GameMediatorBG, GameBgView, this.bgContainer);
 
         setTimeout(()=> {
-            window.dispatchEvent(new Event('resize'));
+            window.dispatchEvent(new Event("resize"));
         }, 100)
     }
 
     registerModule(mediator, view, parentForView) {
-        const instanceMediator = new mediator()
+        const instanceMediator = new mediator();
         instanceMediator.initView(view, parentForView);
     }
 
     resizeEvent() {
-        window.addEventListener('resize', () => {
+        window.addEventListener("resize", () => {
             this.scaleContent();
         });
     }
 
     scaleContent() {
-        const scaleX = window.innerWidth  / 1920;
-        const scaleY = window.innerHeight / 1920;
+        const scaleX = window.innerWidth / 1920;
+        const scaleY = window.innerHeight / 1080;
         GLOBAL_SCALE = Math.min(scaleX, scaleY);
     }
 }
