@@ -10,9 +10,6 @@ export class App extends PIXI.Application {
     constructor(data) {
         super(data)
         this.loadAssets()
-
-        this.resizeEvent()
-        this.scaleContent()
     }
 
     async loadAssets() {
@@ -25,6 +22,8 @@ export class App extends PIXI.Application {
         this.stage.addChild(this.bgContainer);
         this.registerModule(GameMediatorBG, GameBgView, this.bgContainer);
 
+        this.resizeEvent()
+        this.scaleContent()
         setTimeout(()=> {
             window.dispatchEvent(new Event("resize"));
         }, 100)
