@@ -43,6 +43,6 @@ export class App extends PIXI.Application {
     scaleContent() {
         const scaleX = window.innerWidth / 1920;
         const scaleY = window.innerHeight / 1080;
-        GLOBAL_SCALE = Math.min(scaleX, scaleY);
+        GLOBAL_SCALE = Math.max(scaleX, scaleY);
     }
 }

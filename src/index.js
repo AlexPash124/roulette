@@ -3,11 +3,10 @@ import {App} from "./app/app";
 const app = new App
 await app.init({
     background: '#123',
-    resizeTo: window,
-    width: window.innerWidth,   // Ширина канвасу рівна ширині вікна браузера
-    height: window.innerHeight, // Висота канвасу рівна висоті вікна браузера
-    resolution: window.devicePixelRatio || 1, // Роздільна здатність для кращого вигляду на Retina екранах
-    autoResize: true            // Включає автоматичне масштабування
+    width: window.innerWidth,
+    height: window.innerHeight,
+    resolution: window.devicePixelRatio || 1,
+    autoResize: true
 });
 document.body.appendChild(app.canvas);
 
