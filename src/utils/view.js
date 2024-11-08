@@ -26,7 +26,6 @@ export class View extends Container {
     }
 
     onResize() {
-        console.error(GLOBAL_SCALE)
         this.scale.set(GLOBAL_SCALE)
     }
 

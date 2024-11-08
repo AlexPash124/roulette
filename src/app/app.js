@@ -24,6 +24,10 @@ export class App extends PIXI.Application {
         this.bgContainer = new PIXI.Container();
         this.stage.addChild(this.bgContainer);
         this.registerModule(GameMediatorBG, GameBgView, this.bgContainer);
+
+        setTimeout(()=> {
+            window.dispatchEvent(new Event('resize'));
+        }, 100)
     }
 
     registerModule(mediator, view, parentForView) {
@@ -33,19 +37,13 @@ export class App extends PIXI.Application {
 
     resizeEvent() {
         window.addEventListener('resize', () => {
-            setTimeout(()=> {
-                this.scaleContent();
-            }, 50)
+            this.scaleContent();
         });
     }
 
     scaleContent() {
-        const pixelRatio = window.devicePixelRatio || 1;
-
-        // Визначаємо масштаб для канвасу з урахуванням pixelRatio
-        const scaleX = window.innerWidth * pixelRatio / 1920;
-        const scaleY = window.innerHeight * pixelRatio / 1920;
-
+        const scaleX = window.innerWidth  / 1920;
+        const scaleY = window.innerHeight / 1920;
         GLOBAL_SCALE = Math.min(scaleX, scaleY);
     }
 }
