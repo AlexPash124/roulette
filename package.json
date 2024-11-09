@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "eventemitter3": "^5.0.1",
+    "gsap": "^3.12.5",
     "pixi.js": "^8.5.2"
   },
   "description": ""

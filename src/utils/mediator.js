@@ -3,8 +3,8 @@ import {GLOBAL_EMITTER} from "./eventEmitter";
 
 export class BaseMediator {
     constructor() {
-        this.initEmitter()
-        this.initProxy()
+        this.initEmitter();
+        this.initProxy();
     }
 
     initView(referenceConstructorUI, parent) {
@@ -12,11 +12,11 @@ export class BaseMediator {
     }
 
     initEmitter() {
-        this.emitter = GLOBAL_EMITTER
+        this.emitter = GLOBAL_EMITTER;
     }
 
     initProxy() {
-        this.proxy = Proxy.getInstance()
+        this.proxy = Proxy.getInstance();
     }
 
     sendNotification(notification, data) {

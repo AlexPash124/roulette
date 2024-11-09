@@ -1,6 +1,7 @@
 import {View} from "../../utils/view";
 import {Assets, Point, Sprite} from "pixi.js";
 import {GLOBAL_SCALE} from "../../app/app";
+import {SpinButtonNotification} from "./notification";
 
 
 export class GameSpinButtonView extends View {
@@ -18,7 +19,7 @@ export class GameSpinButtonView extends View {
             cursor: "pointer"
         })
         this.addChild(this.spinButton);
-
+        this.addEventForSpinButton()
         this.setPositionSpinButton()
     }
 
@@ -35,4 +36,35 @@ export class GameSpinButtonView extends View {
         this.spinButton.position.set(pos.x, pos.y);
     }
 
+
+    addEventForSpinButton() {
+        this.spinButton.on("pointerdown", () => {
+            this.spinButton.scale.set(.9);
+        });
+        this.spinButton.on("pointerover", () => {
+            this.spinButton.scale.set(1.05);
+        });
+        this.spinButton.on("pointerout", () => {
+            this.spinButton.scale.set(1);
+        });
+        this.spinButton.on("pointerupoutside", () => {
+            this.spinButton.scale.set(1);
+        });
+        this.spinButton.on("pointerup", () => {
+            this.spinButton.scale.set(.9);
+
+            this.setInteractiveSpinButton(false)
+            this.notifyToMediator(SpinButtonNotification.SPIN_BUTTON_PRESSED)
+        });
+    }
+
+    setInteractiveSpinButton(on) {
+        this.spinButton.interactive = on;
+
+        if (on) {
+            this.spinButton.alpha = 1
+        } else {
+            this.spinButton.alpha = 0.5
+        }
+    }
 }
