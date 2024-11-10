@@ -23,7 +23,7 @@ export class View extends Container {
         window.addEventListener("resize", () => {
             setTimeout(() => {
                 this.onResize()
-            }, 100)
+            }, 100);
         });
     }
 

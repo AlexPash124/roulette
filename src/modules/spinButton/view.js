@@ -25,13 +25,12 @@ export class GameSpinButtonView extends View {
 
     onResize() {
         this.scale.set(GLOBAL_SCALE)
-        this.position.set(window.innerWidth / 2, window.innerHeight / 2)
 
         this.setPositionSpinButton();
     }
 
     setPositionSpinButton() {
-        const glPos = new Point(window.innerWidth / 2, window.innerHeight - this.spinButton.height / 2);
+        const glPos = new Point(window.innerWidth / 2 + 3 * this.spinButton.width, window.innerHeight - this.spinButton.height);
         const pos = this.toLocal(glPos);
         this.spinButton.position.set(pos.x, pos.y);
     }
@@ -53,8 +52,8 @@ export class GameSpinButtonView extends View {
         this.spinButton.on("pointerup", () => {
             this.spinButton.scale.set(.9);
 
-            this.setInteractiveSpinButton(false)
-            this.notifyToMediator(SpinButtonNotification.SPIN_BUTTON_PRESSED)
+            this.setInteractiveSpinButton(false);
+            this.notifyToMediator(SpinButtonNotification.SPIN_BUTTON_PRESSED);
         });
     }
 
@@ -62,9 +61,9 @@ export class GameSpinButtonView extends View {
         this.spinButton.interactive = on;
 
         if (on) {
-            this.spinButton.alpha = 1
+            this.spinButton.alpha = 1;
         } else {
-            this.spinButton.alpha = 0.5
+            this.spinButton.alpha = 0.5;
         }
     }
 }

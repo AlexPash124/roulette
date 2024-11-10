@@ -1,3 +1,5 @@
+import {randomInteger} from "./helperFunction";
+
 let instance = null;
 export class Proxy { //для даних
     constructor() {
@@ -8,6 +10,10 @@ export class Proxy { //для даних
             instance = new Proxy();
         }
         return instance;
+    }
+
+    getRandomSector() {
+        return randomInteger(0, 35);
     }
 }
 

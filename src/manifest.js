@@ -12,6 +12,14 @@ export const manifest = {
             assets: {
                 spinButton: "./assets/spinButton.png"
             }
+        },
+        {
+            name: "rouletteAssets",
+            assets: {
+                roulette: "./assets/roulette.png",
+                ball: "./assets/ball.png",
+                section: "./assets/section.png",
+            }
         }
     ]
 };
