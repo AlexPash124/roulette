@@ -2,6 +2,7 @@ import {BaseMediator} from "../../utils/mediator";
 import {SpinButtonNotification} from "./notification";
 import {RouletteNotification} from "../roulette/notification";
 import {GameNotification} from "../../app/notification";
+import {setAnimationTimeoutSync} from "../../utils/helperFunction";
 
 export class GameSpinButtonMediator extends BaseMediator {
     constructor() {
@@ -18,7 +19,8 @@ export class GameSpinButtonMediator extends BaseMediator {
     }
 
     notificationOutside() {
-        this.mapNotification(GameNotification.RESET_GAME, () => {
+        this.mapNotification(GameNotification.RESET_GAME, async () => {
+            await setAnimationTimeoutSync(2.5);
             this.view.setInteractiveSpinButton(true);
         });
     }

@@ -46,7 +46,7 @@ export class GameRouletteView extends View {
         this.rouletteCircle = new Sprite({
             texture: Assets.get("roulette"),
             anchor: .5,
-            scale: 1.2
+            scale: 1.5
         });
 
         this.addChild(this.rouletteCircle);
@@ -72,11 +72,13 @@ export class GameRouletteView extends View {
     onResize() {
         super.onResize();
 
-        this.setPositionRoulette();
+        if (!this.moveCenterAnimation?.isActive() && !this.rouletteGsap?.isActive()) {
+            this.setPositionRoulette();
+        }
     }
 
     setPositionRoulette() {
-        const glPos = new Point(this.rouletteCircle.width, window.innerHeight - this.rouletteCircle.height);
+        const glPos = new Point(window.innerWidth / 2, -200);
         const pos = this.toLocal(glPos);
         this.rouletteCircle.position.set(pos.x, pos.y);
     }
@@ -84,9 +86,43 @@ export class GameRouletteView extends View {
     async playAnimation(sector) {
         const animationTime = 15;
 
+        this.playCentMovementAnimation();
+        await setAnimationTimeoutSync(.5);
         this.playAnimationBall(sector, animationTime);
         await setAnimationTimeoutSync(.2)
         this.playRouletteAnimation(sector, animationTime);
+    }
+
+    playCentMovementAnimation() {
+        this.rouletteCircle.rotation = 0
+        const glPos = new Point(window.innerWidth / 2, window.innerHeight / 2);
+        const pos = this.toLocal(glPos);
+
+        this.moveCenterAnimation = gsap.to(this.rouletteCircle, {
+            x: pos.x,
+            y: pos.y,
+            duration: .5,
+            onComplete: () => {
+                this.moveCenterAnimation.kill();
+            }
+        });
+    }
+
+    playTopMovementAnimation() {
+        const glPos = new Point(window.innerWidth / 2, -200);
+        const pos = this.toLocal(glPos);
+
+        gsap.to(this.rouletteCircle, {
+            x: pos.x,
+            y: pos.y,
+            duration: .5,
+            onUpdate: () => {
+                if (this.rouletteCircle.scale.x > 1.5) {
+                    this.rouletteCircle.scale.x -= .03
+                    this.rouletteCircle.scale.y -= .03
+                }
+            }
+        });
     }
 
     playRouletteAnimation(sector, animationTime) {
@@ -131,9 +167,13 @@ export class GameRouletteView extends View {
                             },
                             onComplete: () => {
                                 timeLine.kill();
-                                setAnimationTimeoutSync(.5).then( ()=> {
+                                setAnimationTimeoutSync(.8).then(() => {
                                     this.notifyToMediator(RouletteNotification.ANIMATION_COMPLETED, sector);
+                                    this.playTopMovementAnimation();
                                 });
+                                setAnimationTimeoutSync(1).then(() => {
+                                    this.rouletteGsap.kill();
+                                })
                             }
                         });
                     } else {
@@ -148,8 +188,5 @@ export class GameRouletteView extends View {
     reset() {
         this.ball.position.set(0, 0);
         this.ball.rotation = 0;
-
-        this.rouletteCircle.rotation = 0;
-        this.rouletteGsap.kill();
     }
 }
