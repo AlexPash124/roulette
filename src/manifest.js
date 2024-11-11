@@ -19,7 +19,13 @@ export const manifest = {
                 roulette: "./assets/roulette.png",
                 ball: "./assets/ball.png",
                 section: "./assets/section.png",
-            }
+            },
+        },
+        {
+            name: "popup",
+            assets: {
+                bgPopup: "./assets/popup.png",
+            },
         }
     ]
 };

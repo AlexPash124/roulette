@@ -7,6 +7,8 @@ import {GameSpinButtonMediator} from "../modules/spinButton/mediator";
 import {GameSpinButtonView} from "../modules/spinButton/view";
 import {GameRouletteView} from "../modules/roulette/view";
 import {GameRouletteMediator} from "../modules/roulette/mediator";
+import {GamePopupMediator} from "../modules/popup/mediator";
+import {GamePopupView} from "../modules/popup/view";
 
 export let GLOBAL_SCALE = 1
 
@@ -22,9 +24,10 @@ export class App extends PIXI.Application {
             await Assets.loadBundle(bundle.name);
         }
 
-        this.createBg()
-        this.createSpinButton()
-        this.createRoulette()
+        this.createBg();
+        this.createSpinButton();
+        this.createRoulette();
+        this.creatPopup();
 
         this.resizeEvent()
         this.scaleContent()
@@ -49,6 +52,12 @@ export class App extends PIXI.Application {
         this.rouletteContainer = new PIXI.Container();
         this.stage.addChild(this.rouletteContainer);
         this.registerModule(GameRouletteMediator, GameRouletteView, this.rouletteContainer);
+    }
+
+    creatPopup() {
+        this.popupContainer = new PIXI.Container();
+        this.stage.addChild(this.popupContainer);
+        this.registerModule(GamePopupMediator, GamePopupView, this.popupContainer);
     }
 
     registerModule(mediator, view, parentForView) {

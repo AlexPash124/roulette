@@ -62,6 +62,7 @@ export class GameSpinButtonView extends View {
 
         if (on) {
             this.spinButton.alpha = 1;
+            this.spinButton.scale.set(1);
         } else {
             this.spinButton.alpha = 0.5;
         }

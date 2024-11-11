@@ -1,5 +1,7 @@
 import {BaseMediator} from "../../utils/mediator";
 import {RouletteNotification} from "./notification";
+import {PopupNotification} from "../popup/notification";
+import {GameNotification} from "../../app/notification";
 
 export class GameRouletteMediator extends BaseMediator {
     constructor() {
@@ -10,15 +12,19 @@ export class GameRouletteMediator extends BaseMediator {
     }
 
     mapUINotification() {
-        // this.mapNotification(SpinButtonNotification.SPIN_BUTTON_PRESSED, (data)=> {
-        //     //this.sendNotification(SPIN_BUTTON_PRESSED)
-        // })
+        this.mapNotification(RouletteNotification.ANIMATION_COMPLETED, (data) => {
+            this.sendNotification(PopupNotification.SHOW_POPUP, data);
+        })
     }
 
     notificationOutside() {
-        this.mapNotification(RouletteNotification.PLAY_ROULETTE, (data)=> {
-            const secor  = this.proxy.getRandomSector()
-            this.view.playAnimation(secor)
-        })
+        this.mapNotification(RouletteNotification.PLAY_ROULETTE, (data) => {
+            const secor = this.proxy.getRandomSector();
+            this.view.playAnimation(secor);
+        });
+
+        this.mapNotification(GameNotification.RESET_GAME, () => {
+            this.view.reset();
+        });
     }
 }

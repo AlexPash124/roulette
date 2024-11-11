@@ -26,7 +26,6 @@ export class BaseMediator {
     mapNotification(notification, callback) {
         this.emitter.on(notification, (data) => {
             callback(data)
-            console.log('myEvent was triggered!', data);
         });
     }
 }

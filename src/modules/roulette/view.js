@@ -2,6 +2,7 @@ import {View} from "../../utils/view";
 import {Assets, Point, Sprite} from "pixi.js";
 import {randomInteger, setAnimationTimeoutSync} from "../../utils/helperFunction";
 import gsap from 'gsap';
+import {RouletteNotification} from "./notification";
 
 export class GameRouletteView extends View {
     constructor(parent) {
@@ -103,6 +104,7 @@ export class GameRouletteView extends View {
         let radius = 200;
         let angel = .09;
         let stepAngel = .1;
+        let isAnimationCompleted = false;
         const timeLine = gsap.timeline()
             .to(this.ball, {
                 duration: .3,
@@ -116,9 +118,10 @@ export class GameRouletteView extends View {
                 duration: animationTime,
                 onUpdate: () => {
                     this.ball.rotation += angel;
-                    stepAngel += .04
-                    const distanceToSection = Math.sqrt((this.ball.x - endPosition.x) ** 2 + (this.ball.y - endPosition.y) ** 2)
-                    if (Math.abs(this.rouletteCircle.rotation * 180 / Math.PI) > 360 && distanceToSection < randomInteger(75, 90)) {
+                    stepAngel += .04;
+                    const distanceToSection = Math.sqrt((this.ball.x - endPosition.x) ** 2 + (this.ball.y - endPosition.y) ** 2);
+                    if (Math.abs(this.rouletteCircle.rotation * 180 / Math.PI) > 360 && distanceToSection < randomInteger(75, 90) && !isAnimationCompleted) {
+                        isAnimationCompleted = true;
                         gsap.to(this.ball, {
                             duration: .6,
                             x: endPosition.x,
@@ -127,25 +130,26 @@ export class GameRouletteView extends View {
                                 this.ball.rotation += 0.0009;
                             },
                             onComplete: () => {
-                                timeLine.kill()
+                                timeLine.kill();
+                                setAnimationTimeoutSync(.5).then( ()=> {
+                                    this.notifyToMediator(RouletteNotification.ANIMATION_COMPLETED, sector);
+                                });
                             }
-                        })
-
+                        });
                     } else {
                         this.ball.x = radius * Math.cos(stepAngel);
                         this.ball.y = radius * Math.sin(stepAngel);
                     }
                 },
                 ease: "power4.out",
-            })
+            });
     }
 
     reset() {
-        this.ball.position.set(0, 0)
-        this.ball.rotation = 0
+        this.ball.position.set(0, 0);
+        this.ball.rotation = 0;
 
-        this.rouletteCircle.rotation = 0
-
-        this.rouletteGsap.kill()
+        this.rouletteCircle.rotation = 0;
+        this.rouletteGsap.kill();
     }
 }
