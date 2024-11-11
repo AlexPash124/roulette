@@ -85,7 +85,7 @@ export class GamePopupView extends View {
     hidePopup() {
         gsap.timeline()
             .to(this.bg, {
-                duration: .5,
+                duration: .3,
                 alpha: 0,
                 ease: "power2.out",
             });

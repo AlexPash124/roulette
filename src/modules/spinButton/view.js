@@ -15,8 +15,9 @@ export class GameSpinButtonView extends View {
         this.spinButton = new Sprite({
             texture: Assets.get("spinButton"),
             anchor: .5,
-            interactive: true,
-            cursor: "pointer"
+            interactive: false,
+            alpha: .5,
+            scale: .8,
         })
         this.addChild(this.spinButton);
         this.addEventForSpinButton()
@@ -63,6 +64,7 @@ export class GameSpinButtonView extends View {
         if (on) {
             this.spinButton.alpha = 1;
             this.spinButton.scale.set(1);
+            this.spinButton.cursor = "pointer";
         } else {
             this.spinButton.alpha = 0.5;
         }

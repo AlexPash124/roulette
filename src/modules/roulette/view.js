@@ -11,6 +11,8 @@ export class GameRouletteView extends View {
         this.createRouletteCircle();
         this.createBall();
         this.createSections();
+
+        this.playCentMovementAnimation();
     }
 
     createSections() {

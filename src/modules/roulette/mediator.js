@@ -2,6 +2,7 @@ import {BaseMediator} from "../../utils/mediator";
 import {RouletteNotification} from "./notification";
 import {PopupNotification} from "../popup/notification";
 import {GameNotification} from "../../app/notification";
+import {PreloaderNotification} from "../preloader/notification";
 
 export class GameRouletteMediator extends BaseMediator {
     constructor() {
@@ -25,6 +26,10 @@ export class GameRouletteMediator extends BaseMediator {
 
         this.mapNotification(GameNotification.RESET_GAME, () => {
             this.view.reset();
+        });
+
+        this.mapNotification(PreloaderNotification.HIDE_PRELOADER_COMPLETED, () => {
+            this.view.playTopMovementAnimation();
         });
     }
 }

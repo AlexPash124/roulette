@@ -9,13 +9,21 @@ import {GameRouletteView} from "../modules/roulette/view";
 import {GameRouletteMediator} from "../modules/roulette/mediator";
 import {GamePopupMediator} from "../modules/popup/mediator";
 import {GamePopupView} from "../modules/popup/view";
+import {GamePreloaderMediator} from "../modules/preloader/mediator";
+import {PreloaderView} from "../modules/preloader/view";
+import {GameMediator} from "./mediator";
 
 export let GLOBAL_SCALE = 1
 
 export class App extends PIXI.Application {
     constructor(data) {
         super(data)
-        this.loadAssets()
+        this.mediator = new GameMediator()
+        this.createPreloader();
+
+        this.loadAssets().then( ()=> {
+            this.mediator.resourcesLoaded()
+        });
     }
 
     async loadAssets() {
@@ -34,6 +42,15 @@ export class App extends PIXI.Application {
         setTimeout(() => {
             window.dispatchEvent(new Event("resize"));
         }, 100)
+    }
+
+
+    createPreloader() {
+        this.preloaderContainer = new PIXI.Container();
+        this.stage.addChild(this.preloaderContainer);
+        this.registerModule(GamePreloaderMediator, PreloaderView, this.preloaderContainer);
+
+        this.preloaderContainer.zIndex = 100
     }
 
     createSpinButton() {
