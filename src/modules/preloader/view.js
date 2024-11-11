@@ -81,15 +81,16 @@ export class PreloaderView extends View {
             duration: .3,
             alpha: 0,
             onComplete: () => {
-                this.parent.destroy({children: true})
+                const parent = this.parent;
+                this.parent.removeChild(this);
+                parent.destroy({children: true});
             }
         })
     }
 
     onResize() {
-        super.onResize()
-
-        this.setPositionLoaderContainer()
+        super.onResize();
+        this.setPositionLoaderContainer();
     }
 
     setPositionLoaderContainer() {

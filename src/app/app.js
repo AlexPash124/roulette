@@ -18,11 +18,11 @@ export let GLOBAL_SCALE = 1
 export class App extends PIXI.Application {
     constructor(data) {
         super(data)
-        this.mediator = new GameMediator()
+        this.mediator = new GameMediator();
         this.createPreloader();
 
         this.loadAssets().then( ()=> {
-            this.mediator.resourcesLoaded()
+            this.mediator.resourcesLoaded();
         });
     }
 
@@ -46,35 +46,35 @@ export class App extends PIXI.Application {
 
 
     createPreloader() {
-        this.preloaderContainer = new PIXI.Container();
-        this.stage.addChild(this.preloaderContainer);
-        this.registerModule(GamePreloaderMediator, PreloaderView, this.preloaderContainer);
+        const preloaderContainer = new PIXI.Container();
+        this.stage.addChild(preloaderContainer);
+        this.registerModule(GamePreloaderMediator, PreloaderView, preloaderContainer);
 
-        this.preloaderContainer.zIndex = 100
+        preloaderContainer.zIndex = 100
     }
 
     createSpinButton() {
-        this.spinButton = new PIXI.Container();
-        this.stage.addChild(this.spinButton);
-        this.registerModule(GameSpinButtonMediator, GameSpinButtonView, this.spinButton);
+        const spinButtonContainer = new PIXI.Container();
+        this.stage.addChild(spinButtonContainer);
+        this.registerModule(GameSpinButtonMediator, GameSpinButtonView, spinButtonContainer);
     }
 
     createBg() {
-        this.bgContainer = new PIXI.Container();
-        this.stage.addChild(this.bgContainer);
-        this.registerModule(GameMediatorBG, GameBgView, this.bgContainer);
+        const bgContainer = new PIXI.Container();
+        this.stage.addChild(bgContainer);
+        this.registerModule(GameMediatorBG, GameBgView, bgContainer);
     }
 
     createRoulette() {
-        this.rouletteContainer = new PIXI.Container();
-        this.stage.addChild(this.rouletteContainer);
-        this.registerModule(GameRouletteMediator, GameRouletteView, this.rouletteContainer);
+        const rouletteContainer = new PIXI.Container();
+        this.stage.addChild(rouletteContainer);
+        this.registerModule(GameRouletteMediator, GameRouletteView, rouletteContainer);
     }
 
     creatPopup() {
-        this.popupContainer = new PIXI.Container();
-        this.stage.addChild(this.popupContainer);
-        this.registerModule(GamePopupMediator, GamePopupView, this.popupContainer);
+        const popupContainer = new PIXI.Container();
+        this.stage.addChild(popupContainer);
+        this.registerModule(GamePopupMediator, GamePopupView, popupContainer);
     }
 
     registerModule(mediator, view, parentForView) {
@@ -91,14 +91,10 @@ export class App extends PIXI.Application {
     scaleContent() {
         const contentWidth = 1920;
         const contentHeight = 1080;
-
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-
         const scaleX = windowWidth / contentWidth;
         const scaleY = windowHeight / contentHeight;
-
-        const scale = Math.max(scaleX, scaleY);
-        GLOBAL_SCALE = scale
+        GLOBAL_SCALE = Math.max(scaleX, scaleY);
     }
 }
